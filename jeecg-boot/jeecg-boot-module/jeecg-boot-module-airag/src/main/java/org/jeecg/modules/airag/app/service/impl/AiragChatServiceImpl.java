@@ -85,6 +85,8 @@ public class AiragChatServiceImpl implements IAiragChatService {
 
     @Override
     public SseEmitter send(ChatSendParams chatSendParams) {
+        redisTemplate.opsForHash().put("conversation-id" + chatSendParams.getConversationId(), "", "");
+
         AssertUtils.assertNotEmpty("参数异常", chatSendParams);
         String userMessage = chatSendParams.getContent();
         AssertUtils.assertNotEmpty("至少发送一条消息", userMessage);
